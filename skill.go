@@ -71,7 +71,8 @@ func (s *skill) HandleEvent(event *Event) (*ResponseBody, error) {
 			return nil, errorHandlerUndefined(string(SessionEndedRequestType))
 		}
 		sessionEndReq := event.Request.(*SessionEndRequest)
-		alexaResponse = s.sessionEndRequestHandler(&ctx, sessionEndReq)
+		s.sessionEndRequestHandler(&ctx, sessionEndReq)
+		return nil, nil
 
 	default:
 		if s.defaultHandler == nil {
@@ -92,4 +93,4 @@ func (s *skill) HandleEvent(event *Event) (*ResponseBody, error) {
 type DefaultHandleFunc = func(alexa *Context, event *Event) Response
 type LaunchRequestHandleFunc = func(alexa *Context, req *LaunchRequest) Response
 type IntentRequestHandleFunc = func(alexa *Context, req *IntentRequest) Response
-type SessionEndRequestHandleFunc = func(alexa *Context, req *SessionEndRequest) Response
+type SessionEndRequestHandleFunc = func(alexa *Context, req *SessionEndRequest)
